@@ -5,16 +5,16 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const MenuDropdown = () => {
-  const user = true;
+  const user = false;
 
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className='relative'>
       <div className='flex flex-row items-center gap-3'>
-        {/* Aircnc btn */}
+        {/*  btn */}
         <div className='hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer'>
-          AirCNC your home
+          Soccer Club Home
         </div>
         {/* Dropdown btn */}
         <div
