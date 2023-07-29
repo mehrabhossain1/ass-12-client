@@ -1,12 +1,14 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const { signIn } = useContext(AuthContext);
 
   const handlePasswordToggle = () => {
     setShowPassword(!showPassword);
@@ -20,6 +22,10 @@ const Login = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+    signIn(data.email, data.password).then((res) => {
+      const user = res.user;
+      console.log(user);
+    });
   };
 
   return (
