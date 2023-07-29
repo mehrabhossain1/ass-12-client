@@ -5,6 +5,7 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -23,11 +24,22 @@ const Login = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    signIn(data.email, data.password).then((res) => {
-      const user = res.user;
-      console.log(user);
-      navigate("/");
-    });
+    signIn(data.email, data.password)
+      .then((res) => {
+        const user = res.user;
+        console.log(user);
+        Swal.fire({
+          title: "Login successful",
+          showClass: {
+            popup: "animate__animated animate__fadeInDown",
+          },
+          hideClass: {
+            popup: "animate__animated animate__fadeOutUp",
+          },
+        });
+        navigate("/");
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -102,6 +114,7 @@ const Login = () => {
               </a>
             </div>
           </form>
+
           <div className='divider'></div>
           <div className='flex items-center justify-center '>
             <FcGoogle size={48} />

@@ -1,13 +1,18 @@
 import { AiOutlineAlignRight } from "react-icons/ai";
 import Avatar from "./Avatar";
-import { useState } from "react";
-// import { AuthContext } from '../../../providers/AuthProvider'
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../Providers/AuthProvider";
 
 const MenuDropdown = () => {
-  const user = false;
-
+  const { user, logOut } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => {})
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className='relative'>
@@ -22,7 +27,9 @@ const MenuDropdown = () => {
           className='p-4 md:py-1 md:px-2 border-[1px] border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition'
         >
           <AiOutlineAlignRight />
-          <div className='hidden md:block'><Avatar /></div>
+          <div className='hidden md:block'>
+            <Avatar />
+          </div>
         </div>
       </div>
       {isOpen && (
@@ -30,7 +37,7 @@ const MenuDropdown = () => {
           <div className='flex flex-col cursor-pointer'>
             {user ? (
               <div
-                //   onClick={logOut}
+                onClick={handleLogout}
                 className='px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer'
               >
                 Logout

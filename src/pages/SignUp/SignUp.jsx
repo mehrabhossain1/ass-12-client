@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const SignUp = () => {
   const {
@@ -21,12 +22,21 @@ const SignUp = () => {
     createUser(data.email, data.password).then((res) => {
       const loggedUser = res.user;
       console.log(loggedUser);
+      Swal.fire({
+        title: "User created",
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+      });
       navigate("/");
     });
   };
 
   const password = watch("password");
-  
+
   return (
     <div className='p-96'>
       <div className='flex items-center justify-center h-screen bg-gray-100'>
