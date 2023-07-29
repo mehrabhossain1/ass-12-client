@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
@@ -11,6 +12,16 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
     <div className='p-28'>
       <div className='flex items-center justify-center min-h-screen py-6'>
@@ -20,21 +31,27 @@ const Login = () => {
               Login
             </h2>
           </div>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className='mb-4'>
               <label
-                htmlFor='username'
+                htmlFor='email'
                 className='block mb-2 text-sm font-medium text-gray-600'
               >
                 Email
               </label>
               <input
-                type='text'
-                id='username'
-                name='username'
+                type='email'
+                id='email'
+                {...register("email", { required: true })}
+                name='email'
                 className='w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300'
                 placeholder='Enter your username or email'
               />
+              {errors.email && (
+                <span className='text-red-500 text-sm'>
+                  {errors.email.message}
+                </span>
+              )}
             </div>
             <div className='mb-6'>
               <label
@@ -47,10 +64,16 @@ const Login = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   id='password'
+                  {...register("password", { required: true })}
                   name='password'
                   className='w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300'
                   placeholder='Enter your password'
                 />
+                {errors.password && (
+                  <span className='text-red-500 text-sm'>
+                    {errors.password.message}
+                  </span>
+                )}
                 <span
                   className='absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer'
                   onClick={handlePasswordToggle}
@@ -79,7 +102,7 @@ const Login = () => {
           </div>
           <p className='py-4'>
             Don't have an account? Please{" "}
-            <span className='text-blue-600'>
+            <span className='text-sm text-blue-600 hover:underline'>
               <Link to='/signup'>Signup</Link>
             </span>{" "}
           </p>
