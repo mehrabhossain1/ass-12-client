@@ -7,7 +7,7 @@ import img3 from "../../../assets/banner/banner3.webp";
 
 const Banner = () => {
   return (
-    <div className='pt-64'>
+    <div className='pt-32'>
       <Carousel>
         <div>
           <img src={img1} />

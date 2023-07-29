@@ -1,9 +1,14 @@
+import Container from "../../Shared/Container/Container";
 import Banner from "../Banner/Banner";
+import Classes from "../Classes/Classes";
 
 const Home = () => {
   return (
     <div>
-      <Banner></Banner>
+      <Container>
+        <Banner></Banner>
+        <Classes></Classes>
+      </Container>
     </div>
   );
 };
