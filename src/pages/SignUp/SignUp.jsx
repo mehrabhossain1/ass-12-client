@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 import Swal from "sweetalert2";
 
+// TODO: private route jodi lage taile kro, moving to homepage
 const SignUp = () => {
   const {
     register,
