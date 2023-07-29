@@ -1,7 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const SignUp = () => {
   const {
@@ -11,9 +13,14 @@ const SignUp = () => {
     watch,
   } = useForm();
 
+  const { createUser } = useContext(AuthContext);
+
   const onSubmit = (data) => {
-    // Handle form submission if needed
     console.log(data);
+    createUser(data.email, data.password).then((res) => {
+      const loggedUser = res.user;
+      console.log(loggedUser);
+    });
   };
 
   const password = watch("password");
@@ -84,9 +91,10 @@ const SignUp = () => {
                 {...register("password", {
                   required: "This field is required",
                   minLength: {
-                    value: 8,
-                    message: "Password must be at least 8 characters long",
+                    value: 6,
+                    message: "Password is less than 6 characters",
                   },
+                  pattern: /(?=.*?[A-Z])(?=.*?[#?!@$%^&*-])/,
                 })}
                 className='w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300'
                 placeholder='Enter your password'
@@ -95,6 +103,12 @@ const SignUp = () => {
                 <span className='text-red-500 text-sm'>
                   {errors.password.message}
                 </span>
+              )}
+              {errors.password?.type === "pattern" && (
+                <p className='text-red-600'>
+                  Password must have one capital letter and one special
+                  characters
+                </p>
               )}
             </div>
             <div className='mb-4'>
