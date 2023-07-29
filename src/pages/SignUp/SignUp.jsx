@@ -2,7 +2,7 @@
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 const SignUp = () => {
@@ -14,16 +14,19 @@ const SignUp = () => {
   } = useForm();
 
   const { createUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     console.log(data);
     createUser(data.email, data.password).then((res) => {
       const loggedUser = res.user;
       console.log(loggedUser);
+      navigate("/");
     });
   };
 
   const password = watch("password");
+  
   return (
     <div className='p-96'>
       <div className='flex items-center justify-center h-screen bg-gray-100'>

@@ -3,12 +3,13 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { signIn } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handlePasswordToggle = () => {
     setShowPassword(!showPassword);
@@ -25,6 +26,7 @@ const Login = () => {
     signIn(data.email, data.password).then((res) => {
       const user = res.user;
       console.log(user);
+      navigate("/");
     });
   };
 
