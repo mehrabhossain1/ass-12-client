@@ -102,9 +102,7 @@ const Login = () => {
           </form>
           <div className='divider'></div>
           <div className='flex items-center justify-center '>
-            <div className='text-3xl text-center py-4'>
-              <FcGoogle />
-            </div>
+            <FcGoogle size={48} />
           </div>
           <p className='py-4'>
             Don't have an account? Please{" "}
