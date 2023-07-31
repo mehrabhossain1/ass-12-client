@@ -1,6 +1,6 @@
 import Container from "../../Shared/Container/Container";
 import Banner from "../Banner/Banner";
-import Classes from "../Classes/Classes";
+import PopularClasses from "../PopularClasses/PopularClasses";
 import PopularInstructors from "../PopularInstructors/PopularInstructors";
 
 const Home = () => {
@@ -8,7 +8,7 @@ const Home = () => {
     <div>
       <Container>
         <Banner></Banner>
-        <Classes></Classes> 
+        <PopularClasses></PopularClasses>
         <PopularInstructors></PopularInstructors>
       </Container>
     </div>
