@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
-
+import { TbFidgetSpinner } from "react-icons/tb";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../providers/AuthProvider";
 
@@ -17,8 +17,15 @@ const SignUp = () => {
     watch,
   } = useForm();
 
-  const { createUser, updateUserProfile } = useContext(AuthContext);
+  const {
+    loading,
+    setLoading,
+    signInWithGoogle,
+    createUser,
+    updateUserProfile,
+  } = useContext(AuthContext);
   const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
 
   const onSubmit = (data) => {
     console.log(data);
@@ -39,6 +46,19 @@ const SignUp = () => {
         })
         .catch((err) => console.log(err));
     });
+  };
+
+  // handle google sign in
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+      .then((result) => {
+        console.log(result.user);
+        navigate(from, { replace: true });
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err.message);
+      });
   };
 
   const password = watch("password");
@@ -185,12 +205,19 @@ const SignUp = () => {
                 type='submit'
                 className='px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg focus:outline-none hover:bg-blue-700'
               >
-                Sign Up
+                {loading ? (
+                  <TbFidgetSpinner className='m-auto animate-spin' size={24} />
+                ) : (
+                  "Sign Up"
+                )}
               </button>
             </div>
           </form>
           <div className='divider'></div>
-          <div className='flex items-center justify-center'>
+          <div
+            onClick={handleGoogleSignIn}
+            className='flex items-center justify-center'
+          >
             <FcGoogle size={48} />
           </div>
           <p className='py-4'>

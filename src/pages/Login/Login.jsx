@@ -6,10 +6,11 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
+import { TbFidgetSpinner } from 'react-icons/tb'
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { signIn } = useContext(AuthContext);
+  const {loading, setLoading, signIn, signInWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -42,7 +43,23 @@ const Login = () => {
         });
         navigate(from, { replace: true });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
+  };
+
+  // handle google sign in
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+      .then((result) => {
+        console.log(result.user);
+        navigate(from, { replace: true });
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err.message);
+      });
   };
 
   return (
@@ -110,7 +127,11 @@ const Login = () => {
                 type='submit'
                 className='px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg focus:outline-none hover:bg-blue-700'
               >
-                Login
+               {loading ? (
+                  <TbFidgetSpinner className='m-auto animate-spin' size={24} />
+                ) : (
+                  "Login"
+                )}
               </button>
               <a href='#' className='text-sm text-blue-600 hover:underline'>
                 Forgot Password?
@@ -119,7 +140,10 @@ const Login = () => {
           </form>
 
           <div className='divider'></div>
-          <div className='flex items-center justify-center '>
+          <div
+            onClick={handleGoogleSignIn}
+            className='flex items-center justify-center cursor-pointer'
+          >
             <FcGoogle size={48} />
           </div>
           <p className='py-4'>
