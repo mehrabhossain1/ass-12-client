@@ -3,19 +3,21 @@ import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../Providers/AuthProvider";
+
 import Swal from "sweetalert2";
+import { AuthContext } from "../../providers/AuthProvider";
 
 // TODO: private route jodi lage taile kro, moving to homepage
 const SignUp = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
     watch,
   } = useForm();
 
-  const { createUser } = useContext(AuthContext);
+  const { createUser, updateUserProfile } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
@@ -23,16 +25,19 @@ const SignUp = () => {
     createUser(data.email, data.password).then((res) => {
       const loggedUser = res.user;
       console.log(loggedUser);
-      Swal.fire({
-        title: "User created",
-        showClass: {
-          popup: "animate__animated animate__fadeInDown",
-        },
-        hideClass: {
-          popup: "animate__animated animate__fadeOutUp",
-        },
-      });
-      navigate("/");
+      updateUserProfile(data.name, data.photoUrl)
+        .then(() => {
+          reset();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "User created successfully",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate("/");
+        })
+        .catch((err) => console.log(err));
     });
   };
 
