@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { SiGoogleclassroom } from "react-icons/si";
 
 const Links = () => {
   const navOptions = (
@@ -15,6 +16,14 @@ const Links = () => {
       </li>
       <li>
         <a>Dashboard</a>
+      </li>
+      <li>
+        <Link to='/'>
+          <button className='btn'>
+            <SiGoogleclassroom />
+            <div className='badge badge-secondary'>+0</div>
+          </button>
+        </Link>
       </li>
     </>
   );

@@ -7,7 +7,6 @@ import { TbFidgetSpinner } from "react-icons/tb";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../providers/AuthProvider";
 
-// TODO: private route jodi lage taile kro, moving to homepage
 const SignUp = () => {
   const {
     register,
@@ -216,7 +215,7 @@ const SignUp = () => {
           <div className='divider'></div>
           <div
             onClick={handleGoogleSignIn}
-            className='flex items-center justify-center'
+            className='flex items-center justify-center cursor-pointer'
           >
             <FcGoogle size={48} />
           </div>
