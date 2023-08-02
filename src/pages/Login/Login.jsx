@@ -3,14 +3,17 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../Providers/AuthProvider";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { signIn } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
 
   const handlePasswordToggle = () => {
     setShowPassword(!showPassword);
@@ -37,7 +40,7 @@ const Login = () => {
             popup: "animate__animated animate__fadeOutUp",
           },
         });
-        navigate("/");
+        navigate(from, { replace: true });
       })
       .catch((err) => console.log(err));
   };

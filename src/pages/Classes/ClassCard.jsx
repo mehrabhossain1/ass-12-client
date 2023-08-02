@@ -19,7 +19,7 @@ const ClassCard = ({ classData }) => {
         </p>
         <h2 className='card-title text-2xl font-bold'>${price}</h2>
         <div className='card-actions justify-end'>
-          <button className='btn btn-warning'>Buy Now</button>
+          <button className='btn btn-warning'>Select</button>
         </div>
       </div>
     </div>

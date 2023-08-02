@@ -1,15 +1,17 @@
+import { Link } from "react-router-dom";
+
 const Links = () => {
   const navOptions = (
     <>
       <li>
-        <a>Home</a>
+        <Link to='/'>Home</Link>
       </li>
 
       <li>
-        <a>Instructors</a>
+        <Link to='/instructors'>Instructors</Link>
       </li>
       <li>
-        <a>Classes</a>
+        <Link to='/classes'>Classes</Link>
       </li>
       <li>
         <a>Dashboard</a>
