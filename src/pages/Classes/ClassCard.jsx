@@ -1,24 +1,40 @@
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ClassCard = ({ classData }) => {
-  const { image, name, instructor, available_seats, price } = classData;
+  const { _id, image, name, instructor, available_seats, price } = classData;
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSelectClass = (classData) => {
     console.log(classData);
     if (user) {
-      fetch("http://localhost:5000/selected")
+      const selectedClass = {
+        selectedClassId: _id,
+        email: user.email,
+        image,
+        name,
+        instructor,
+        available_seats,
+        price,
+      };
+      fetch("http://localhost:5000/selected", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(selectedClass),
+      })
         .then((res) => res.json())
         .then((data) => {
           if (data.insertedId) {
             Swal.fire({
               position: "top-end",
               icon: "success",
-              title: "Your work has been saved",
+              title: "This class is booked",
               showConfirmButton: false,
               timer: 1500,
             });
@@ -35,7 +51,7 @@ const ClassCard = ({ classData }) => {
         confirmButtonText: "Login now!",
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate("/login");
+          navigate("/login", { state: { from: location } });
         }
       });
     }
@@ -59,6 +75,11 @@ const ClassCard = ({ classData }) => {
         </p>
         <h2 className='card-title text-2xl font-bold'>${price}</h2>
         <div className='card-actions justify-end'>
+          {/* TODO: If the user is not logged in, then tell the user to log in before selecting the course. This button will be disabled 
+          if:
+  Available seats are 0
+  Logged in as admin/instructor
+  The class card background will be red if the available seats are 0. */}
           <button
             onClick={() => handleSelectClass(classData)}
             className='btn btn-warning'
