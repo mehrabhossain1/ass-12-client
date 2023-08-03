@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { SiGoogleclassroom } from "react-icons/si";
+import useSelectedClass from "../../../hooks/useSelectedClass";
 
 const Links = () => {
+  const [selectedClass] = useSelectedClass();
+
   const navOptions = (
     <>
       <li>
@@ -21,7 +24,9 @@ const Links = () => {
         <Link to='/'>
           <button className='btn'>
             <SiGoogleclassroom />
-            <div className='badge badge-secondary'>+0</div>
+            <div className='badge badge-secondary'>
+              +{selectedClass?.length || 0}
+            </div>
           </button>
         </Link>
       </li>
