@@ -1,28 +1,30 @@
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import Container from "../pages/Shared/Container/Container";
 import { FaHome, FaShoppingCart, FaWallet } from "react-icons/fa";
+import { MdPayment } from "react-icons/md";
 
 const Dashboard = () => {
   const navOptions = (
     <>
       <li>
-        <Link>
+        <NavLink to='/dashboard/home'>
           <FaHome /> User Home
-        </Link>
+        </NavLink>
       </li>
       <li>
-        <Link>
-          <FaShoppingCart /> My Booking
-        </Link>
-      </li>
-
-      <li>
-        <Link>
+        <NavLink to='/dashboard/history'>
           <FaWallet /> Payment History
-        </Link>
+        </NavLink>
       </li>
       <li>
-        <a>Sidebar Item 2</a>
+        <NavLink to='/dashboard/my-booking'>
+          <FaShoppingCart /> My Selected Classes
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to='/dashboard/my-enrolled'>
+          <MdPayment /> My Enrolled Classes
+        </NavLink>
       </li>
     </>
   );
@@ -52,7 +54,7 @@ const Dashboard = () => {
               </label>
             </div>
             <div className='flex-1 px-2 mx-2 cursor-pointer'>
-              <Link to='/'>Dashboard</Link>
+              <NavLink to='/'>Dashboard</NavLink>
             </div>
             <div className='flex-none hidden lg:block'>
               <ul className='menu menu-horizontal'>
