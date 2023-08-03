@@ -21,7 +21,7 @@ const Links = () => {
         <a>Dashboard</a>
       </li>
       <li>
-        <Link to='/'>
+        <Link to='/dashboard/my-booking'>
           <button className='btn'>
             <SiGoogleclassroom />
             <div className='badge badge-secondary'>
