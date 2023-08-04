@@ -1,6 +1,7 @@
 import useSelectedClass from "../../hooks/useSelectedClass";
 import { FaTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const MyBooking = () => {
   const [selectedClass, refetch] = useSelectedClass();
@@ -37,7 +38,9 @@ const MyBooking = () => {
       <div className='uppercase font-semibold flex justify-evenly items-center'>
         <h3 className='text-3xl'>Total Booked: {selectedClass.length}</h3>
         <h3 className='text-3xl'>Total Price: {total}</h3>
-        <button className='btn btn-warning'>PAY</button>
+        <Link to='/dashboard/payment'>
+          <button className='btn btn-warning'>PAY</button>
+        </Link>
       </div>
 
       <div className='overflow-x-auto'>
