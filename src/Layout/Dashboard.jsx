@@ -2,8 +2,11 @@ import { NavLink, Outlet } from "react-router-dom";
 import Container from "../pages/Shared/Container/Container";
 import { FaHome, FaShoppingCart, FaWallet } from "react-icons/fa";
 import { MdPayment } from "react-icons/md";
+import useSelectedClass from "../hooks/useSelectedClass";
 
 const Dashboard = () => {
+  const [selectedClass] = useSelectedClass();
+
   const navOptions = (
     <>
       <li>
@@ -19,6 +22,9 @@ const Dashboard = () => {
       <li>
         <NavLink to='/dashboard/my-booking'>
           <FaShoppingCart /> My Selected Classes
+          <span className='badge badge-secondary'>
+            +{selectedClass?.length || 0}
+          </span>
         </NavLink>
       </li>
       <li>
