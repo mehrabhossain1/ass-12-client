@@ -10,8 +10,24 @@ const AllUsers = () => {
 
   //   const [role, setRole] = useState("Student");
 
-  const handleMakeInstructor = () => {
+  const handleMakeInstructor = (user) => {
     // setRole("Instructor");
+    fetch(`http://localhost:5000/users/instructor/${user._id}`, {
+      method: "PATCH",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount) {
+          refetch();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `${user.name} is an Instructor Now`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
   };
 
   const handleMakeAdmin = (user) => {
@@ -55,11 +71,11 @@ const AllUsers = () => {
                 <td>{index + 1}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
-                <td>{user?.role || "student"}</td>
+                <td>{user?.role || "Student"}</td>
                 <td>
                   {" "}
                   <button
-                    onClick={handleMakeInstructor}
+                    onClick={() => handleMakeInstructor(user)}
                     className='btn btn-primary'
                   >
                     Make Instructor
