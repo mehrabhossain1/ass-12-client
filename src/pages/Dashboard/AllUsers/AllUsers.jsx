@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-// import { useState } from "react";
 import Swal from "sweetalert2";
 
 const AllUsers = () => {
@@ -8,10 +7,7 @@ const AllUsers = () => {
     return res.json();
   });
 
-  //   const [role, setRole] = useState("Student");
-
   const handleMakeInstructor = (user) => {
-    // setRole("Instructor");
     fetch(`http://localhost:5000/users/instructor/${user._id}`, {
       method: "PATCH",
     })
