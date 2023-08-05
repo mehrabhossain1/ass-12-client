@@ -7,31 +7,56 @@ import useSelectedClass from "../hooks/useSelectedClass";
 const Dashboard = () => {
   const [selectedClass] = useSelectedClass();
 
+  // TODO: load data from the server
+  const isAdmin = true;
+
   const navOptions = (
     <>
-      <li>
-        <NavLink to='/dashboard/home'>
-          <FaHome /> User Home
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to='/dashboard/history'>
-          <FaWallet /> Payment History
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to='/dashboard/my-booking'>
-          <FaShoppingCart /> My Selected Classes
-          <span className='badge badge-secondary'>
-            +{selectedClass?.length || 0}
-          </span>
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to='/dashboard/my-enrolled'>
-          <MdPayment /> My Enrolled Classes
-        </NavLink>
-      </li>
+      {isAdmin ? (
+        <>
+          <li>
+            <NavLink to='/dashboard/admin-home'>
+              <FaHome /> Admin Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to='/dashboard/manage-classes'>
+              <FaWallet /> Manage Classes
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to='/dashboard/all-users'>
+              <FaShoppingCart /> Manage Users
+            </NavLink>
+          </li>
+        </>
+      ) : (
+        <>
+          <li>
+            <NavLink to='/dashboard/home'>
+              <FaHome /> User Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to='/dashboard/history'>
+              <FaWallet /> Payment History
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to='/dashboard/my-booking'>
+              <FaShoppingCart /> My Selected Classes
+              <span className='badge badge-secondary'>
+                +{selectedClass?.length || 0}
+              </span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to='/dashboard/my-enrolled'>
+              <MdPayment /> My Enrolled Classes
+            </NavLink>
+          </li>
+        </>
+      )}
     </>
   );
 
