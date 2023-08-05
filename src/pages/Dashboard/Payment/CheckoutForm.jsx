@@ -1,10 +1,17 @@
 import { useStripe, CardElement, useElements } from "@stripe/react-stripe-js";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 const CheckoutForm = ({ price }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [cardError, setCardError] = useState("");
+
+  // TODO: axios secure here
+// useEffect(()=>{
+//   fetch("http://localhost:5000/create-payment-intent",{
+//     method
+//   })
+// },[])
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -34,7 +41,6 @@ const CheckoutForm = ({ price }) => {
 
   return (
     <>
-      {" "}
       <form className='w-2/3 m-10' onSubmit={handleSubmit}>
         <CardElement
           options={{

@@ -8,7 +8,7 @@ import Classes from "../pages/Classes/Classes";
 import Dashboard from "../Layout/Dashboard";
 import MyBooking from "../pages/MyBooking/MyBooking";
 import Payment from "../pages/Dashboard/Payment/Payment";
-// import PrivateRoute from "./PrivateRoute";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -39,7 +39,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <Dashboard></Dashboard>,
+    element: (
+      <PrivateRoute>
+        <Dashboard></Dashboard>
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "my-booking",
