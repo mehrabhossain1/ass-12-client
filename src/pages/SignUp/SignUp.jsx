@@ -1,11 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { FcGoogle } from "react-icons/fc";
+
 import { Link, useNavigate } from "react-router-dom";
 import { TbFidgetSpinner } from "react-icons/tb";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProvider";
+import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 
 const SignUp = () => {
   const {
@@ -16,15 +17,8 @@ const SignUp = () => {
     watch,
   } = useForm();
 
-  const {
-    loading,
-    setLoading,
-    signInWithGoogle,
-    createUser,
-    updateUserProfile,
-  } = useContext(AuthContext);
+  const { loading, createUser, updateUserProfile } = useContext(AuthContext);
   const navigate = useNavigate();
-  const from = location.state?.from?.pathname || "/";
 
   const onSubmit = (data) => {
     createUser(data.email, data.password).then((res) => {
@@ -59,19 +53,6 @@ const SignUp = () => {
         })
         .catch((err) => console.log(err));
     });
-  };
-
-  // handle google sign in
-  const handleGoogleSignIn = () => {
-    signInWithGoogle()
-      .then((result) => {
-        console.log(result.user);
-        navigate(from, { replace: true });
-      })
-      .catch((err) => {
-        setLoading(false);
-        console.log(err.message);
-      });
   };
 
   const password = watch("password");
@@ -226,19 +207,14 @@ const SignUp = () => {
               </button>
             </div>
           </form>
-          <div className='divider'></div>
-          <div
-            onClick={handleGoogleSignIn}
-            className='flex items-center justify-center cursor-pointer'
-          >
-            <FcGoogle size={48} />
-          </div>
+
           <p className='py-4'>
             Already have an account? Please{" "}
             <span className='text-sm text-blue-600 hover:underline'>
               <Link to='/login'>Login</Link>
             </span>{" "}
           </p>
+          <SocialLogin></SocialLogin>
         </div>
       </div>
     </div>

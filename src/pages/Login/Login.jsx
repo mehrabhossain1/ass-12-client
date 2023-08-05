@@ -2,15 +2,17 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { FcGoogle } from "react-icons/fc";
+
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../providers/AuthProvider";
+
 import Swal from "sweetalert2";
-import { TbFidgetSpinner } from 'react-icons/tb'
+import { TbFidgetSpinner } from "react-icons/tb";
+import SocialLogin from "../Shared/SocialLogin/SocialLogin";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const {loading, setLoading, signIn, signInWithGoogle } = useContext(AuthContext);
+  const { loading, setLoading, signIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -46,19 +48,6 @@ const Login = () => {
       .catch((err) => {
         setLoading(false);
         console.log(err);
-      });
-  };
-
-  // handle google sign in
-  const handleGoogleSignIn = () => {
-    signInWithGoogle()
-      .then((result) => {
-        console.log(result.user);
-        navigate(from, { replace: true });
-      })
-      .catch((err) => {
-        setLoading(false);
-        console.log(err.message);
       });
   };
 
@@ -127,7 +116,7 @@ const Login = () => {
                 type='submit'
                 className='px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg focus:outline-none hover:bg-blue-700'
               >
-               {loading ? (
+                {loading ? (
                   <TbFidgetSpinner className='m-auto animate-spin' size={24} />
                 ) : (
                   "Login"
@@ -139,19 +128,13 @@ const Login = () => {
             </div>
           </form>
 
-          <div className='divider'></div>
-          <div
-            onClick={handleGoogleSignIn}
-            className='flex items-center justify-center cursor-pointer'
-          >
-            <FcGoogle size={48} />
-          </div>
           <p className='py-4'>
             Don't have an account? Please{" "}
             <span className='text-sm text-blue-600 hover:underline'>
               <Link to='/signup'>Signup</Link>
             </span>{" "}
           </p>
+          <SocialLogin></SocialLogin>
         </div>
       </div>
     </div>
