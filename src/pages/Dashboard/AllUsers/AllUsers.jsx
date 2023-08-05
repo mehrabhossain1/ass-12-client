@@ -23,13 +23,21 @@ const AllUsers = () => {
             </tr>
           </thead>
           <tbody>
-            {/* row 1 */}
-            <tr>
-              <th>1</th>
-              <td>Cy Ganderton</td>
-              <td>Quality Control Specialist</td>
-              <td>Blue</td>
-            </tr>
+            {users.map((user, index) => (
+              <tr key={user._id}>
+                <td>{index + 1}</td>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>Blue</td>
+                <td>
+                  {" "}
+                  <button className='btn btn-primary'>
+                    Make Instructor
+                  </button>{" "}
+                  <button className='btn btn-secondary'>Make Admin</button>{" "}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
