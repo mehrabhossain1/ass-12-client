@@ -5,7 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import { TbFidgetSpinner } from "react-icons/tb";
 import Swal from "sweetalert2";
-import { AuthContext } from "../../providers/AuthProvider";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const SignUp = () => {
   const {
@@ -27,21 +27,35 @@ const SignUp = () => {
   const from = location.state?.from?.pathname || "/";
 
   const onSubmit = (data) => {
-    console.log(data);
     createUser(data.email, data.password).then((res) => {
       const loggedUser = res.user;
       console.log(loggedUser);
+
       updateUserProfile(data.name, data.photoUrl)
         .then(() => {
-          reset();
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "User created successfully",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          navigate("/");
+          const savedUser = { name: data.name, email: data.email };
+
+          fetch("http://localhost:5000/users", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(savedUser),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.insertedId) {
+                reset();
+                Swal.fire({
+                  position: "top-end",
+                  icon: "success",
+                  title: "User created successfully",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+                navigate("/");
+              }
+            });
         })
         .catch((err) => console.log(err));
     });
