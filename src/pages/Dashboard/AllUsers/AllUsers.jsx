@@ -1,10 +1,37 @@
 import { useQuery } from "@tanstack/react-query";
+// import { useState } from "react";
+import Swal from "sweetalert2";
 
 const AllUsers = () => {
-  const { data: users = [] } = useQuery(["users"], async () => {
+  const { data: users = [], refetch } = useQuery(["users"], async () => {
     const res = await fetch("http://localhost:5000/users");
     return res.json();
   });
+
+  //   const [role, setRole] = useState("Student");
+
+  const handleMakeInstructor = () => {
+    // setRole("Instructor");
+  };
+
+  const handleMakeAdmin = (user) => {
+    fetch(`http://localhost:5000/users/admin/${user._id}`, {
+      method: "PATCH",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount) {
+          refetch();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `${user.name} is an Admin Now`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
+  };
 
   return (
     <div>
@@ -28,13 +55,21 @@ const AllUsers = () => {
                 <td>{index + 1}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
-                <td>Blue</td>
+                <td>{user?.role || "student"}</td>
                 <td>
                   {" "}
-                  <button className='btn btn-primary'>
+                  <button
+                    onClick={handleMakeInstructor}
+                    className='btn btn-primary'
+                  >
                     Make Instructor
                   </button>{" "}
-                  <button className='btn btn-secondary'>Make Admin</button>{" "}
+                  <button
+                    onClick={() => handleMakeAdmin(user)}
+                    className='btn btn-secondary'
+                  >
+                    Make Admin
+                  </button>{" "}
                 </td>
               </tr>
             ))}
