@@ -23,4 +23,5 @@ const useSelectedClass = () => {
 
   return [selectedClass, refetch];
 };
+
 export default useSelectedClass;
