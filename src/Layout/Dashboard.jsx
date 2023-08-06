@@ -3,12 +3,15 @@ import Container from "../pages/Shared/Container/Container";
 import { FaHome, FaShoppingCart, FaWallet } from "react-icons/fa";
 import { MdPayment } from "react-icons/md";
 import useSelectedClass from "../hooks/useSelectedClass";
+import useAdmin from "../hooks/useAdmin";
 
 const Dashboard = () => {
   const [selectedClass] = useSelectedClass();
 
   // TODO: load data from the server
-  const isAdmin = true;
+  // const isAdmin = true;
+
+  const [isAdmin] = useAdmin();
 
   const navOptions = (
     <>
@@ -43,7 +46,7 @@ const Dashboard = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to='/dashboard/my-booking'>
+            <NavLink to='/dashboard'>
               <FaShoppingCart /> My Selected Classes
               <span className='badge badge-secondary'>
                 +{selectedClass?.length || 0}
