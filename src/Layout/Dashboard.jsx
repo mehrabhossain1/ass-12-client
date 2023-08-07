@@ -1,34 +1,21 @@
 import { NavLink, Outlet } from "react-router-dom";
 import Container from "../pages/Shared/Container/Container";
-import { FaHome, FaShoppingCart, FaWallet } from "react-icons/fa";
+import { FaShoppingCart, FaWallet } from "react-icons/fa";
 import { MdPayment } from "react-icons/md";
 import useSelectedClass from "../hooks/useSelectedClass";
 import useAdmin from "../hooks/useAdmin";
-// import axios from "axios";
-// import useAuth from "../hooks/useAuth";
+import useInstructor from "../hooks/useInstructor";
 
 const Dashboard = () => {
   const [selectedClass] = useSelectedClass();
 
-  // TODO: load data from the server
-  // const isAdmin = true;
-
   const [isAdmin] = useAdmin();
+  const [isInstructor] = useInstructor();
 
   const navOptions = (
     <>
       {isAdmin ? (
         <>
-          <li>
-            <NavLink to='/dashboard/admin-home'>
-              <FaHome /> Admin Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/dashboard/add-class'>
-              <FaShoppingCart /> Add A Class
-            </NavLink>
-          </li>
           <li>
             <NavLink to='/dashboard/manage-classes'>
               <FaWallet /> Manage Classes
@@ -40,13 +27,21 @@ const Dashboard = () => {
             </NavLink>
           </li>
         </>
-      ) : (
+      ) : isInstructor ? (
         <>
           <li>
-            <NavLink to='/dashboard/home'>
-              <FaHome /> User Home
+            <NavLink to='/dashboard/add-class'>
+              <FaShoppingCart /> Add A Class
             </NavLink>
           </li>
+          <li>
+            <NavLink to='/dashboard/my-classes'>
+              <FaShoppingCart /> My Classes
+            </NavLink>
+          </li>
+        </>
+      ) : (
+        <>
           <li>
             <NavLink to='/dashboard/history'>
               <FaWallet /> Payment History
