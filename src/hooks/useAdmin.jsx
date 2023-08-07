@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "./useAuth";
+import axios from "axios";
 // import axios from "axios";
 
 const useAdmin = () => {
@@ -9,7 +10,7 @@ const useAdmin = () => {
   const { data: isAdmin, isLoading: isAdminLoading } = useQuery({
     queryKey: ["isAdmin", user?.email],
     queryFn: async () => {
-      const res = await fetch(
+      const res = await axios(
         `http://localhost:5000/users/admin/${user?.email}`,
         {
           headers: {
@@ -18,7 +19,7 @@ const useAdmin = () => {
         }
       );
       console.log("is admin res", res);
-      return res.json();
+      return res.data.admin;
     },
   });
   return [isAdmin, isAdminLoading];
