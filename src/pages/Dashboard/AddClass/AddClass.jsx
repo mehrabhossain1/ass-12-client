@@ -1,17 +1,14 @@
+import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
 import SectionTitle from "../../Shared/SectionTitle/SectionTitle";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 const img_hosting_token = import.meta.env.VITE_Image_Upload_Token;
 
 const AddClass = () => {
+  const { register, handleSubmit, reset } = useForm();
   const { user } = useAuth();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
 
   const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
 
@@ -36,12 +33,26 @@ const AddClass = () => {
             image: imgURL,
           };
           console.log(classItem);
+
+          axios.post("http://localhost:5000/class", classItem).then((data) => {
+            console.log("after adding new class", data.data);
+            if (data.data.insertedId) {
+              reset();
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Class Added Successfully",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          });
         }
       });
   };
 
-  console.log(errors);
-  console.log(img_hosting_token);
+  // console.log(errors);
+  // console.log(img_hosting_token);
 
   return (
     <div>
