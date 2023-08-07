@@ -13,7 +13,7 @@ const AddClass = () => {
     formState: { errors },
   } = useForm();
 
-  const img_hosting_url = `https://api.imgbb.com/1/upload?expiration=600&key=${img_hosting_token}`;
+  const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
 
   const onSubmit = (data) => {
     const formData = new FormData();
@@ -25,7 +25,18 @@ const AddClass = () => {
     })
       .then((res) => res.json())
       .then((imgResponse) => {
-        console.log(imgResponse);
+        if (imgResponse.success) {
+          const imgURL = imgResponse.data.display_url;
+          const { name, instructor, available_seats, price } = data;
+          const classItem = {
+            name,
+            instructor,
+            available_seats,
+            price: parseFloat(price),
+            image: imgURL,
+          };
+          console.log(classItem);
+        }
       });
   };
 
