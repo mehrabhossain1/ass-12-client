@@ -10,6 +10,7 @@ import MyBooking from "../pages/MyBooking/MyBooking";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PrivateRoute from "./PrivateRoute";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
+import AddClass from "../pages/Dashboard/AddClass/AddClass";
 
 export const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ export const router = createBrowserRouter([
       {
         path: "all-users",
         element: <AllUsers></AllUsers>,
+      },
+      {
+        path: "add-class",
+        element: <AddClass></AddClass>,
       },
     ],
   },
