@@ -12,6 +12,7 @@ import PrivateRoute from "./PrivateRoute";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 import AddClass from "../pages/Dashboard/AddClass/AddClass";
 import AdminRoute from "./AdminRoute";
+// import InstructorRoute from "./InstructorRoute";
 
 export const router = createBrowserRouter([
   {
@@ -66,7 +67,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "add-class",
-        element: <AddClass></AddClass>,
+        element: (
+          <AdminRoute>
+            <AddClass></AddClass>
+          </AdminRoute>
+        ),
       },
     ],
   },
