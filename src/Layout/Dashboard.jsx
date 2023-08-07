@@ -4,6 +4,8 @@ import { FaHome, FaShoppingCart, FaWallet } from "react-icons/fa";
 import { MdPayment } from "react-icons/md";
 import useSelectedClass from "../hooks/useSelectedClass";
 import useAdmin from "../hooks/useAdmin";
+// import axios from "axios";
+// import useAuth from "../hooks/useAuth";
 
 const Dashboard = () => {
   const [selectedClass] = useSelectedClass();
